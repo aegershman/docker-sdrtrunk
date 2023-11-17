@@ -1,6 +1,8 @@
 # docker-sdrtrunk
 
 ```sh
+docker compose -f docker-compose.dev.yml up --build
+
 docker build -t sdrtrunk .
 docker build -t sdrtrunk . --platform linux/x86_64
 docker build -t sdrtrunk . -f Dockerfile.aarch64
