@@ -1,0 +1,23 @@
+---
+services:
+  sdrtrunk:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platforms:
+        - linux/x86_64
+    platform: linux/x86_64
+    container_name: sdrtrunk
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    ports:
+      - 3000:3000
+      - 3001:3001
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+        #volumes:
+      #  - /var/run/dbus:/var/run/dbus
