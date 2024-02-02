@@ -1,28 +1,23 @@
 # docker-sdrtrunk
 
-```sh
-docker compose -f docker-compose.dev.yml up --build
+Work in progress. Runs sdrtrunk in vnc.
 
-docker build -t sdrtrunk .
-docker build -t sdrtrunk . --platform linux/x86_64
-docker build -t sdrtrunk . -f Dockerfile.aarch64
-docker build -t sdrtrunk . -f Dockerfile.aarch64 --platform linux/amd64
-
-docker run -d \
-  --name=sdrtrunk \
-  --platform linux/x86_64 \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e TZ=Etc/UTC \
-  -p 3000:3000 \
-  -p 3001:3001 \
-  -v ./config:/config \
-  --shm-size="1gb" \
-  --restart unless-stopped \
-  sdrtrunk
-
-docker exec -it sdrtrunk /bin/bash
-
-docker stop sdrtrunk
-docker rm sdrtrunk
+```yml
+services:
+  sdrtrunk:
+    image: aegershman/docker-sdrtrunk:latest
+    container_name: sdrtrunk
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=America/Chicago
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    volumes:
+      - /appdata/sdrtrunk/config:/config
+      - /appdata/sdrtrunk/root:/root
+    ports:
+      3000:3000
 ```
